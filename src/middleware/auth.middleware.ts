@@ -1,9 +1,9 @@
-import { logInfo } from './../utils/logger/logger';
 import HttpException from '@/utils/exceptions/http.exception';
 import token from '@/utils/token';
 import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
 import UserRepository from '@/resources/repository/user.repo';
+import { logInfo } from '@/utils/logger/logger';
 
 
 async function authenticatedMiddleware(
@@ -31,6 +31,8 @@ async function authenticatedMiddleware(
         if (payload instanceof jwt.JsonWebTokenError) {
             return next(new HttpException(401, 'Unauthorised'));
         }
+
+        console.log(payload.id)
 
         const user = await userRepo.getUserById(payload.id)
 

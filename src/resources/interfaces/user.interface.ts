@@ -6,7 +6,8 @@ export interface User {
     userName: string,
     email: string,
     selectedCurrency: string,
-    initialInvestment: number,
+    stockInitialInvestment: number,
+    cryptoInitialInvestment: number,
     totalProfit: number,
     password: string
 }
