@@ -1,4 +1,3 @@
-
 export const logInfo = (message: string, context: string, data?: any) => {
     console.info({
         context, message, logLevel: 'INFO', data
