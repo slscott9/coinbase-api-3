@@ -169,7 +169,7 @@ class UserRepository {
     async getStockSymbols(userId: number, isCrypto: boolean): Promise<any> {
         try {
             let query = `select ticker_symbol from coinbase.user_initial_inv_info
-                         where user_id = ($1),
+                         where user_id = ($1)
                          and is_crypto = ($2)
                          group by ticker_symbol`
             
