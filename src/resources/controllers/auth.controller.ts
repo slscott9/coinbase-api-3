@@ -29,7 +29,7 @@ class AuthController {
             this.loginUser
         )
 
-        this.router.get(`${this.path}`, authenticatedMiddleware, this.getUser);
+        this.router.get(`${this.path}/user`, authenticatedMiddleware, this.getUser);
 
 
     }

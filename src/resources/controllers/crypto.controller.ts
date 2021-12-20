@@ -10,7 +10,7 @@ class CryptoController {
     public path = '/crypto';
     public router = Router();
     public cryptoService: CryptoService
-    public logContext: string = 'USER CONTROLLER'
+    public logContext: string = 'CRYPTO CONTROLLER'
 
     constructor(userRepo: UserRepository) {
         this.initRoutes();
@@ -19,9 +19,9 @@ class CryptoController {
 
     public initRoutes() {
         this.router.post(
-            `${this.path}/investment`,
+            `${this.path}/investments/update`,
             authenticatedMiddleware,
-            this.getInitInvestment
+            this.updateInvestments
         )
         this.router.post(
             `${this.path}/investments`,
@@ -29,44 +29,12 @@ class CryptoController {
             this.getAllInvestments
         )
         this.router.post(
-            `${this.path}/investments/update`,
+            `${this.path}/investment`,
             authenticatedMiddleware,
-            this.updateInvestments
+            this.getInitInvestment
         )
-     
-
+        
         // this.router.get(`${this.path}`, authenticatedMiddleware, this.getUser);
-    }
-
-    private getInitInvestment = async(
-        req: Request,
-        res: Response,
-        next: NextFunction
-    ): Promise<Response | void> => {
-        try {
-            logInfo('getUserInitInvestment() - incoming request', this.logContext, req.body)
-            let initialInvestment = await this.cryptoService.getInitInvestment(req.body.userId);
-            res.status(200).send({initialInvestment: initialInvestment})
-        } catch (error) {
-            next(new HttpException(400, error.message));
-        }
-    }
-
-    private getAllInvestments = async(
-        req: Request,
-        res: Response,
-        next: NextFunction
-    ): Promise<Response | void> => {
-        try {
-            logInfo('getAllInvestments() - incoming request', this.logContext, req.body)
-            let investments: Investment[] = await this.cryptoService.getAllInvestments(req.body.userId);
-            logInfo('Response from getAllInvestments()', this.logContext, JSON.stringify(investments))
-            res.status(200).send(investments)
-        } catch (error) {
-            logInfo('Error from getAllInvestments', this.logContext, error);
-            next(new HttpException(400, error.message));
-
-        }
     }
 
     private updateInvestments = async(
@@ -91,6 +59,41 @@ class CryptoController {
 
         }
     }
+
+    private getAllInvestments = async(
+        req: Request,
+        res: Response,
+        next: NextFunction
+    ): Promise<Response | void> => {
+        try {
+            logInfo('getAllInvestments() - incoming request', this.logContext, req.body)
+            let investments: Investment[] = await this.cryptoService.getAllInvestments(req.body.userId);
+            logInfo('Response from getAllInvestments()', this.logContext, JSON.stringify(investments))
+            res.status(200).send(investments)
+        } catch (error) {
+            logInfo('Error from getAllInvestments', this.logContext, error);
+            next(new HttpException(400, error.message));
+
+        }
+    }
+
+    private getInitInvestment = async(
+        req: Request,
+        res: Response,
+        next: NextFunction
+    ): Promise<Response | void> => {
+        try {
+            logInfo('getUserInitInvestment() - incoming request', this.logContext, req.body)
+            let initialInvestment = await this.cryptoService.getInitInvestment(req.body.userId);
+            res.status(200).send({initialInvestment: initialInvestment})
+        } catch (error) {
+            next(new HttpException(400, error.message));
+        }
+    }
+
+   
+
+    
 
    
 
