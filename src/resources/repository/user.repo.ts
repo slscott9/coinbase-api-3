@@ -230,6 +230,7 @@ class UserRepository {
         userId: number,
         investments: Investment[],
     ): Promise<any> {
+        logInfo('investments from repo', this.logContext, investments)
         try {
             let queryResult = await this.db.tx('update-investments',async (t:any) => {
                 const queries = investments.map((investment: any) => {
