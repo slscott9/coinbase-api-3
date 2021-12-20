@@ -154,7 +154,7 @@ class UserRepository {
         try {
             let query = `select ticker_symbol , sum(total_shares) from coinbase.user_initial_inv_info uiii 
                         where user_id = ($1)
-                        where is_crypto = ($2)
+                        and is_crypto = ($2)
                         group by ticker_symbol`
 
             let queryResult = await this.db.any(query, [userId, isCrypto]);
