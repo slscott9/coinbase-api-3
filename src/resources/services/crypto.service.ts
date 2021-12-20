@@ -66,6 +66,7 @@ class CryptoService {
             investment.totalInvestment = investment.initialPPS * investment.totalShares
         }
 
+        logInfo('investments from calcl', this.logContext, investments)
         return investments
     }
 
