@@ -235,7 +235,7 @@ class UserRepository {
                 const queries = investments.map((investment: any) => {
                     return t.one(
                         `insert into coinbase.user_initial_inv_info(initial_pps, total_shares, ticker_symbol, user_id, total_investment, is_crypto)
-                         values(($1), ($2), ($3), ($4), ($5), true)
+                         values(($1), ($2), ($3), ($4), ($5), ($6))
                          returning 
                          initial_pps as "initialPPS",
                          total_shares as "totalShares",
@@ -248,7 +248,8 @@ class UserRepository {
                             investment.totalShares,
                             investment.tickerSymbol,
                             investment.userId,
-                            investment.totalInvestment
+                            investment.totalInvestment,
+                            true
                         ],
                         (a: any) => a.id
                     )
