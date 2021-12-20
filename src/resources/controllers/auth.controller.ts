@@ -4,6 +4,7 @@ import UserRepository from "../repository/user.repo";
 import UserService from "../services/user.service";
 import { NextFunction, Router, Request, Response } from "express";
 import AuthService from "../services/auth.service";
+import authenticatedMiddleware from "@/middleware/auth.middleware";
 
 class AuthController {
 
@@ -27,6 +28,9 @@ class AuthController {
             `${this.path}/login`,
             this.loginUser
         )
+
+        this.router.get(`${this.path}`, authenticatedMiddleware, this.getUser);
+
 
     }
 
