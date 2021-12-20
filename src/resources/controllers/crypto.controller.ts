@@ -34,7 +34,7 @@ class CryptoController {
             this.getInitInvestment
         )
         
-        // this.router.get(`${this.path}`, authenticatedMiddleware, this.getUser);
+        this.router.get(`${this.path}`, authenticatedMiddleware, this.getUser);
     }
 
     private updateInvestments = async(
@@ -91,7 +91,20 @@ class CryptoController {
         }
     }
 
-   
+
+
+    private getUser = (
+        req: Request,
+        res: Response,
+        next: NextFunction
+    ): Response | void => {
+        if (!req.body.user) {
+            return next(new HttpException(404, 'No logged in user'));
+        }
+
+        res.status(200).send({ data: req.body.user });
+    };
+
 
     
 

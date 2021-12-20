@@ -1,3 +1,4 @@
+import authenticatedMiddleware from "@/middleware/auth.middleware";
 import HttpException from "@/utils/exceptions/http.exception";
 import Controller from "@/utils/interface/controller.interface";
 import { logInfo, logError } from "@/utils/logger/logger";
@@ -22,12 +23,17 @@ class CoinbaseController implements Controller {
     private initRoutes() {
         this.router.post(
             `${this.path}/current/totals`,
+            authenticatedMiddleware,
             this.currentPriceTotals
         )
         this.router.post(
             `${this.path}/current`,
+            authenticatedMiddleware,
             this.getCurrentPrices
         )
+
+        this.router.get(`${this.path}/user`, authenticatedMiddleware, this.getUser);
+
     }
     
     private currentPriceTotals = async(
@@ -59,6 +65,19 @@ class CoinbaseController implements Controller {
             next(new HttpException(400, error.message));
         }
     }
+
+    private getUser = (
+        req: Request,
+        res: Response,
+        next: NextFunction
+    ): Response | void => {
+        if (!req.body.user) {
+            return next(new HttpException(404, 'No logged in user'));
+        }
+
+        res.status(200).send({ data: req.body.user });
+    };
+
 
 
 }
