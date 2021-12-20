@@ -27,6 +27,7 @@ class CryptoService {
     public async updateInvestments(userId: number, investmentReq: any): Promise<any> {
         try {
             let investments = await this.calculateTotalInvestments(investmentReq)
+            logInfo('investments from updateEInvestments', this.logContext, investments)
             let initInvestment = await this.userRepo.updateCryptoInvestments(userId, investments);
             logInfo('updateCryptoInvestments() - returning initInvestment', this.logContext, initInvestment);
             return initInvestment
