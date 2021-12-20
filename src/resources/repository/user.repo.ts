@@ -40,7 +40,33 @@ class UserRepository {
     async getUserById(
         userId: number
     ): Promise<any> {
-        
+        try {
+            let userInsert = `select jsonb_agg(
+                                jsonb_build_object(
+                                    'userId', user_id,
+                                    'firstName', first_name,
+                                    'lastName', last_name,
+                                    'userName', user_name,
+                                    'email', email,
+                                    'selectedCurrency', selected_currency,
+                                    'stockInitialInvestment', stock_init_investment,
+                                    'cryptoInitialInvestment', crypto_init_investment,                                    
+                                    'totalProfit', total_profit,
+                                    'password', password
+                                )  
+                            ) as "user"
+                            from coinbase.user u
+                            where u.user_id = $1`
+
+            let queryResult = await this.db.any(userInsert, userId);
+            logInfo('getUserById() - returning user', this.logContext, queryResult[0].user[0])
+            return queryResult[0].user[0]
+
+        } catch (error) {
+            logError('There was an error in loginUser()', this.logContext, error);
+            throw new Error(error.message);
+
+        }
     }
 
     async createUser(
