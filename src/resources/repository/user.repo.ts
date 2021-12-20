@@ -45,7 +45,7 @@ class UserRepository {
                                     'stockInitialInvestment', stock_init_investment,
                                     'cryptoInitialInvestment', crypto_init_investment,    
                                     'totalProfit', total_profit,
-                                    'password', password
+                                    'password', "password"
                                 )  
                             ) as "user"
                             from coinbase.user u
