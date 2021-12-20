@@ -36,6 +36,8 @@ async function authenticatedMiddleware(
 
         const user = await userRepo.getUserById(payload.id)
 
+        logInfo('user from auth middleware', 'AUTH MIDDLEWARE', user)
+
         logInfo('user', 'auth', user)
         if (!user) {
             return next(new HttpException(401, 'Unauthorised'));
