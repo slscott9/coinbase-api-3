@@ -1,6 +1,6 @@
 import authenticatedMiddleware from "@/middleware/auth.middleware";
 import HttpException from "@/utils/exceptions/http.exception";
-import { logError, logInfo } from "@/utils/logger/logger";
+import { logInfo, logError } from "@/utils/logger/logger";
 import { NextFunction, Router, Request, Response } from "express";
 import UserRepository from "../repository/user.repo";
 import UserService from "../services/user.service";
@@ -30,6 +30,9 @@ class UserControler {
             authenticatedMiddleware,
             this.saveTotalProfit
         )
+
+        this.router.get(`${this.path}/user`, authenticatedMiddleware, this.getUser);
+
     }
 
     private getInitInvestment = async(
@@ -60,6 +63,20 @@ class UserControler {
             next(new HttpException(400, error.message));
         }
     }
+
+    private getUser = (
+        req: Request,
+        res: Response,
+        next: NextFunction
+    ): Response | void => {
+        if (!req.body.user) {
+            return next(new HttpException(404, 'No logged in user'));
+        }
+
+        res.status(200).send({ data: req.body.user });
+    };
+
+
 }
 
 export default UserControler

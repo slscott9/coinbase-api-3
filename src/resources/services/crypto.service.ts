@@ -1,6 +1,6 @@
 import { Investment } from './../interfaces/investment.interface';
 import UserRepository from "../repository/user.repo"
-import { logError, logInfo } from '@/utils/logger/logger';
+import { logInfo, logError } from '@/utils/logger/logger';
 
 class CryptoService {
 

@@ -3,8 +3,8 @@ import Controller from "./utils/interface/controller.interface";
 import compression from 'compression';
 import cors from 'cors';
 import morgan from 'morgan';
-import helmet from 'helmet';
 import errorMiddleware from "./middleware/error.middleware";
+import helmet from "helmet";
 
 
 
