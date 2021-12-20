@@ -257,7 +257,7 @@ class UserRepository {
     
                 await t.batch(queries);
     
-                let queryResult = await t.any(
+                let queryResult2 = await t.any(
                     `select sum(total_investment) as "totalInvestments"
                      from coinbase.user_initial_inv_info uiii 
                      where user_id = $1
@@ -270,7 +270,7 @@ class UserRepository {
                      set crypto_init_investment = ($1)
                      where user_id = ($2)
                      returning crypto_init_investment as "cryptoInitInvestment"`,
-                     [queryResult[0].totalInvestments, userId]
+                     [queryResult2[0].totalInvestments, userId]
                 )
             });
             logInfo('updateCryptoInvestments() - queryResult[0].cryptoInitInvestment', this.logContext, queryResult[0].cryptoInitInvestment)
