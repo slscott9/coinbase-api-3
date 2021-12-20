@@ -7,10 +7,10 @@ import CoinbaseService from "../services/coinbase.service";
 
 class CoinbaseController implements Controller {
 
-    public path = '/prices';
+    public path = '/coinbase';
     public router = Router();
     public service: CoinbaseService
-    private logContext: string = 'CoinbaseController'
+    private logContext: string = 'COINBASE CONTROLLER'
 
     constructor(
         userRepo: UserRepository

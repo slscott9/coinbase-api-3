@@ -10,7 +10,7 @@ class CryptoController {
     public path = '/crypto';
     public router = Router();
     public cryptoService: CryptoService
-    public logContext: string = 'User Controller'
+    public logContext: string = 'USER CONTROLLER'
 
     constructor(userRepo: UserRepository) {
         this.initRoutes();

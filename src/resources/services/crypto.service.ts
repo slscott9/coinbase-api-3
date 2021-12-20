@@ -5,7 +5,7 @@ import { logError, logInfo } from '@/utils/logger/logger';
 class CryptoService {
 
     public userRepo: UserRepository
-    public logContext: string = 'Crypto Service'
+    public logContext: string = 'CRYPTO SERVICE'
 
     constructor(
         userRepo: UserRepository

@@ -1,3 +1,4 @@
+import authenticatedMiddleware from "@/middleware/auth.middleware";
 import HttpException from "@/utils/exceptions/http.exception";
 import { logError, logInfo } from "@/utils/logger/logger";
 import { NextFunction, Router, Request, Response } from "express";
@@ -10,7 +11,7 @@ class UserControler {
     public path = '/user';
     public router = Router();
     public userService: UserService
-    public logContext: string = 'UserController'
+    public logContext: string = 'USER CONTROLLER'
 
     constructor(userRepo: UserRepository) {
         this.initRoutes();
@@ -18,6 +19,20 @@ class UserControler {
     }
 
     public initRoutes() {
+
+        this.router.post(
+            `${this.path}/investment`,
+            authenticatedMiddleware,
+            this.getInitInvestment
+        )
+        this.router.post(
+            `${this.path}/profit`,
+            authenticatedMiddleware,
+            this.saveTotalProfit
+        )
+
+        this.router.get(`${this.path}`, authenticatedMiddleware, this.getUser);
+
 
     }
 

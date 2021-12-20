@@ -6,7 +6,7 @@ import UserRepository from "../repository/user.repo"
 class AuthService {
 
     public userRepo: UserRepository
-    public logContext: string = 'UserService'
+    public logContext: string = 'AUTH SERVICE'
 
     constructor(
         userRepo: UserRepository

@@ -6,7 +6,7 @@ class CoinbaseService {
 
     private apiRepo: ApiService;
     private userRepo: UserRepository
-    private logContext: string = 'CoinbaseService'
+    private logContext: string = 'COINBASE SERVICE'
   
     constructor(userRepo: UserRepository) {
       this.userRepo = userRepo

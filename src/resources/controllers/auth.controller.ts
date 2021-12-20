@@ -10,7 +10,7 @@ class AuthController {
     public path = '/auth';
     public router = Router();
     public authService: AuthService
-    public logContext: string = 'UserController'
+    public logContext: string = 'AUTH CONTROLLER'
 
     constructor(userRepo: UserRepository) {
         this.initRoutes();

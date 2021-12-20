@@ -5,7 +5,7 @@ import UserRepository from "../repository/user.repo"
 class StockService {
 
     public userRepo: UserRepository
-    public logContext: string = 'UserService'
+    public logContext: string = 'STOCK SERVICE'
 
     constructor(
         userRepo: UserRepository
@@ -14,7 +14,16 @@ class StockService {
     }
 
 
-    
+    public async getInitInvestment(userId: number) : Promise<any> {
+        try {
+            let initialInvestment = await this.userRepo.getStockInitInvestment(userId);
+            logInfo('getInitInvestment() - returning initialInvestment', this.logContext, initialInvestment);
+            return initialInvestment;
+        } catch (error) {
+            logError('Error from getInitInvestment()', this.logContext, error)
+            throw new Error(error.message);
+        }
+    }
 
     public async updateInvestments(userId: number, investmentReq: any): Promise<any> {
         try {

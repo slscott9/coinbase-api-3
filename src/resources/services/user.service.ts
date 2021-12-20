@@ -6,15 +6,13 @@ import UserRepository from "../repository/user.repo"
 class UserService {
 
     public userRepo: UserRepository
-    public logContext: string = 'UserService'
+    public logContext: string = 'USER SERVICE'
 
     constructor(
         userRepo: UserRepository
     ){
         this.userRepo = userRepo
     }
-
-    
 
     public async getInitInvestment(userId: number) : Promise<any> {
         try {
