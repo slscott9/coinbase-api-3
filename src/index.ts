@@ -1,4 +1,6 @@
 import App from "./app";
+import 'module-alias/register';
+import 'dotenv/config';
 import AuthController from "./resources/controllers/auth.controller";
 import CoinbaseController from "./resources/controllers/coinbase.controller";
 import CryptoController from "./resources/controllers/crypto.controller";

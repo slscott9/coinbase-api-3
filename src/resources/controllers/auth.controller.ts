@@ -1,10 +1,9 @@
-import HttpException from "@/utils/exceptions/http.exception";
-import { logInfo } from "@/utils/logger/logger";
 import UserRepository from "../repository/user.repo";
-import UserService from "../services/user.service";
 import { NextFunction, Router, Request, Response } from "express";
 import AuthService from "../services/auth.service";
 import authenticatedMiddleware from "@/middleware/auth.middleware";
+import HttpException from "@/utils/exceptions/http.exception";
+import { logInfo } from "@/utils/logger/logger";
 
 class AuthController {
 
