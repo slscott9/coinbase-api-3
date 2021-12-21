@@ -60,6 +60,8 @@ class CoinMarketService {
       await this.buildRequest(tickerSymbols), ['X-CMC_PRO_API_KEY', process.env.CM_API_KEY]
     )
 
+    logInfo('formatCurrentPrices() - response', this.logContext, response)
+
     currentPrices = await this.buildResponse(response, tickerSymbols)
     return currentPrices;
   }
@@ -79,20 +81,24 @@ class CoinMarketService {
     return newURl
   }
 
-  private async buildResponse(marketData: any, symbols: any[]) : Promise<any> {
-    let formattedData: any[] = []
+  private async buildResponse(marketData: any, symbols: any[]): Promise<any> {
+    try {
+      let formattedData: any[] = []
 
-    for(let i = 0; i < symbols.length; i++) {
-      formattedData.push(
-        {
-          tickerSymbol: marketData.data.ADA.symbol,
-          price: marketData.data.ADA.quote.USD.price
+      for (let i = 0; i < symbols.length; i++) {
+        formattedData.push(
+          {
+            tickerSymbol: marketData.data[symbols[i].ticker_symbol].symbol,
+            price: marketData.data[symbols[i].ticker_symbol].quote.USD.price
 
-        }
-      )
+          }
+        )
+      }
+
+      return formattedData
+    } catch (error) {
+      logError('Error from buildResponse()', this.logContext, error)
     }
-
-    return formattedData
   }
 
 }
