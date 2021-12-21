@@ -8,6 +8,10 @@ class ApiService {
             xhr.open("GET", url)
             xhr.setRequestHeader("Content-Type", "application/json")
 
+            if(headers){
+                xhr.setRequestHeader(headers[0], headers[1])
+            }
+
             xhr.onload = (evt: any) => {
                 resolve(JSON.parse(xhr.responseText))
             }

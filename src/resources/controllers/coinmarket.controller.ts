@@ -1,23 +1,22 @@
 import authenticatedMiddleware from "@/middleware/auth.middleware";
 import HttpException from "@/utils/exceptions/http.exception";
-import Controller from "@/utils/interface/controller.interface";
 import { logInfo, logError } from "@/utils/logger/logger";
 import { NextFunction, Router, Request, Response } from "express";
 import UserRepository from "../repository/user.repo";
-import CoinbaseService from "../services/coinbase.service";
+import CoinMarketService from "../services/coinmarket.service";
 
-class CoinbaseController implements Controller {
+class CoinMarketController {
 
-    public path = '/coinbase';
+    public path = '/coinmarket';
     public router = Router();
-    public service: CoinbaseService
-    private logContext: string = 'COINBASE CONTROLLER'
+    public service: CoinMarketService
+    private logContext: string = 'COIN MARKGET CONTROLLER'
 
     constructor(
         userRepo: UserRepository
     ){
         this.initRoutes();
-        this.service = new CoinbaseService(userRepo);
+        this.service = new CoinMarketService(userRepo);
     }
 
     private initRoutes() {
@@ -33,7 +32,6 @@ class CoinbaseController implements Controller {
         )
 
         this.router.get(`${this.path}/user`, authenticatedMiddleware, this.getUser);
-
     }
     
     private currentPriceTotals = async(
@@ -77,9 +75,6 @@ class CoinbaseController implements Controller {
 
         res.status(200).send({ data: req.body.user });
     };
-
-
-
 }
 
-export default CoinbaseController
+export default CoinMarketController
