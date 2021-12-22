@@ -14,9 +14,9 @@ class CoinMarketService {
     this.apiRepo = new ApiService();
   }
 
-  public async currentPriceTotals(userId: number) {
+  public async currentPriceTotals(userId: number, isCrypto: boolean) {
     try {
-      let userInvestments: any[] = await this.userRepo.getTotalShares(userId, true)
+      let userInvestments: any[] = await this.userRepo.getTotalShares(userId, isCrypto)
       let currentPrices: any[] = await this.getCurrentPrices(undefined, userInvestments)
       let totalCurrentPrices: number = 0
 
