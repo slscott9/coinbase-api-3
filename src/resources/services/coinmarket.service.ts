@@ -16,8 +16,9 @@ class CoinMarketService {
 
   public async currentPriceTotals(userId: number, isCrypto: boolean) {
     try {
+      logInfo('currentPriceTotals() isCrypto', this.logContext, isCrypto)
       let userInvestments: any[] = await this.userRepo.getTotalShares(userId, isCrypto)
-      let currentPrices: any[] = await this.getCurrentPrices(undefined, userInvestments)
+      let currentPrices: any[] = await this.getCurrentPrices(isCrypto, undefined, userInvestments)
       let totalCurrentPrices: number = 0
 
       for (let i = 0; i < userInvestments.length; i++) {
@@ -34,14 +35,14 @@ class CoinMarketService {
     }
   }
 
-  public async getCurrentPrices(userId?: number, userInvestments?: any[]): Promise<any> {
+  public async getCurrentPrices(isCrypto: boolean, userId?: number, userInvestments?: any[]): Promise<any> {
     try {
       let currentPrices: any[] = [];
 
       if (userInvestments) {
         currentPrices = await this.formatCurrentPrices(userInvestments)
       } else {
-        let tickerSymbols = await this.userRepo.getStockSymbols(userId, true);
+        let tickerSymbols = await this.userRepo.getStockSymbols(userId, isCrypto);
         currentPrices = await this.formatCurrentPrices(tickerSymbols);
       }
 
