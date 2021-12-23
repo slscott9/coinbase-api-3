@@ -152,6 +152,7 @@ class UserRepository {
         isCrypto: boolean
     ): Promise<any | undefined> {
         try {
+           logInfo('isCrypto from getTotalShares()' , this.logContext, isCrypto)
             let query = `select ticker_symbol , sum(total_shares) from coinbase.user_initial_inv_info uiii 
                         where user_id = ($1)
                         and is_crypto = ($2)
