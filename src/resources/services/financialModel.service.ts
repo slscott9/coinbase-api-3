@@ -22,8 +22,11 @@ class FinancialModelService {
           let totalCurrentPrices: number = 0
     
           for (let i = 0; i < userInvestments.length; i++) {
+              console.log(currentPrices[i].tickerSymbol)
+              console.log(userInvestments[i].ticker_symbol)
             if (currentPrices[i].tickerSymbol === userInvestments[i].ticker_symbol) {
-              totalCurrentPrices += (+currentPrices[i].price * userInvestments[i].sum)
+                logInfo('IN IF STATEMENT', this.logContext, null)
+              totalCurrentPrices += (currentPrices[i].price * userInvestments[i].sum)
             }
           }
     
@@ -82,6 +85,7 @@ class FinancialModelService {
               }
             )
           }
+          logInfo('buildResponse() - formattedData', this.logContext, formattedData)
     
           return formattedData
         } catch (error) {

@@ -156,7 +156,9 @@ class UserRepository {
             let query = `select ticker_symbol , sum(total_shares) from coinbase.user_initial_inv_info uiii 
                         where user_id = ($1)
                         and is_crypto = ($2)
-                        group by ticker_symbol`
+                        group by ticker_symbol
+                        order by ticker_symbol asc
+                        `
 
             let queryResult = await this.db.any(query, [userId, isCrypto]);
             logInfo('getTotalShares() - queryResult', this.logContext, queryResult)
@@ -172,7 +174,10 @@ class UserRepository {
             let query = `select ticker_symbol from coinbase.user_initial_inv_info
                          where user_id = ($1)
                          and is_crypto = ($2)
-                         group by ticker_symbol`
+                         group by ticker_symbol
+                         order by ticker_symbol asc
+
+                         `
             
             let queryResult = await this.db.any(query, [userId, isCrypto]);
             logInfo('getStockSymbols() - queryResult', this.logContext, queryResult)
