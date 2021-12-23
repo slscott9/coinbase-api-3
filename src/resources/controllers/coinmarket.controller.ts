@@ -56,7 +56,7 @@ class CoinMarketController {
     ): Promise<Response | void> => {
         try {
             logInfo('currentPriceTotals() - incoming request', this.logContext, req.body)
-            let currentPrices = await this.service.getCurrentPrices(req.body.userId, undefined)
+            let currentPrices = await this.service.getCurrentPrices(req.body.isCrypto, req.body.userId, undefined)
             res.status(200).send({currentPrices: currentPrices})
         } catch (error) {
             logError('Error in getCurrentPrices()', this.logContext, error);
