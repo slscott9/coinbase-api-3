@@ -162,7 +162,7 @@ class UserRepository {
 
             let queryResult = await this.db.any(query, [userId, isCrypto]);
             logInfo('getTotalShares() - queryResult', this.logContext, queryResult)
-            return queryResult[0]
+            return queryResult
         } catch (error) {
             logError('There was an error in getTotalShares()', this.logContext, error);
             throw new Error(error.message);
