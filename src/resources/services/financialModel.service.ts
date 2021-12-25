@@ -18,6 +18,7 @@ class FinancialModelService {
         try {
           logInfo('currentPriceTotals() isCrypto', this.logContext, isCrypto)
           let userInvestments: any[] = await this.userRepo.getTotalShares(userId, isCrypto)
+          logInfo('currentPriceTotals() - userInvestments', this.logContext, userInvestments)
           let currentPrices: any[] = await this.getCurrentPrices(isCrypto, userId, userInvestments)
           let totalCurrentPrices: number = 0
     
