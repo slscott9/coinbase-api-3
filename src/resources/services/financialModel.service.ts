@@ -53,6 +53,8 @@ class FinancialModelService {
               urls = await this.buildUrls(tickerSymbols)
               currentPrices = await this.processApiRequests(urls)
             }
+
+            logInfo('current prices from api request', this.logContext, currentPrices)
       
             logInfo('getCurrentPrices() - returning currentPrices', this.logContext, currentPrices)
             return await this.buildResponse(currentPrices);
@@ -78,6 +80,7 @@ class FinancialModelService {
         let newURl = 'https://financialmodelingprep.com/api/v3/quote-short/'
 
         for(let symbol of symbols){
+          logInfo('urls from buildUrls', this.logContext,  newURl += symbol += `?apikey=${process.env.FM_API_KEY}`)
           urls.push(
             newURl += symbol += `?apikey=${process.env.FM_API_KEY}`
           )
