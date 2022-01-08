@@ -59,7 +59,7 @@ class FinancialModelService {
       }
 
       private async buildURL(tickerSymbols: any[]): Promise<any> {
-        let newURl = 'https://financialmodelingprep.com/api/v3/quote/'
+        let newURl = 'https://financialmodelingprep.com/api/v3/quote-short/'
     
         for (let i = 0; i < tickerSymbols.length; i++) {
           if (i === tickerSymbols.length - 1) {
