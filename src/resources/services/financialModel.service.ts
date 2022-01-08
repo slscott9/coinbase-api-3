@@ -1,4 +1,5 @@
 import { logInfo, logError } from "@/utils/logger/logger";
+import { url } from "inspector";
 import UserRepository from "../repository/user.repo";
 import ApiService from "./api.service";
 
@@ -42,12 +43,15 @@ class FinancialModelService {
       public async getCurrentPrices(isCrypto: boolean, userId?: number, userInvestments?: any[]): Promise<any> {
         try {
             let currentPrices: any[] = [];
+            let urls: string[] = [];
       
             if (userInvestments) {
-              currentPrices = await this.apiRepo.apiGetRequest(await this.buildURL(userInvestments))
+              urls = await this.buildUrls(userInvestments)
+              currentPrices = await this.processApiRequests(urls)
             } else {
               let tickerSymbols = await this.userRepo.getStockSymbols(userId, isCrypto);
-              currentPrices = await this.apiRepo.apiGetRequest(await this.buildURL(tickerSymbols))
+              urls = await this.buildUrls(tickerSymbols)
+              currentPrices = await this.processApiRequests(urls)
             }
       
             logInfo('getCurrentPrices() - returning currentPrices', this.logContext, currentPrices)
@@ -58,20 +62,48 @@ class FinancialModelService {
           }
       }
 
-      private async buildURL(tickerSymbols: any[]): Promise<any> {
-        let newURl = 'https://financialmodelingprep.com/api/v3/quote-short/'
-    
-        for (let i = 0; i < tickerSymbols.length; i++) {
-          if (i === tickerSymbols.length - 1) {
-            newURl += tickerSymbols[i].ticker_symbol
-          } else {
-            newURl += tickerSymbols[i].ticker_symbol + ','
-          }
+      private async processApiRequests(urls: string[]): Promise<any> {
+        let currentPrices: any[] = []
+
+        for(let url of urls) {
+          currentPrices.push(
+            await this.apiRepo.apiGetRequest(url)
+          )
         }
-    
-        logInfo('buildRequest() - newURL', this.logContext, newURl + `?apikey=${process.env.FM_API_KEY}`)
-        return newURl += `?apikey=${process.env.FM_API_KEY}`
+        return currentPrices
       }
+
+      private async buildUrls(symbols: string[]): Promise<any> {
+        let urls: string[] = []
+        let newURl = 'https://financialmodelingprep.com/api/v3/quote-short/'
+
+        for(let symbol of symbols){
+          urls.push(
+            newURl += symbol += `?apikey=${process.env.FM_API_KEY}`
+          )
+        }
+
+        return urls
+
+      }
+
+
+      //financialmodelingprep.com no longer allows batch requests on free acccount
+
+      // private async buildURL(tickerSymbols: any[]): Promise<any> {
+      //   let newURl = 'https://financialmodelingprep.com/api/v3/quote-short/'
+    
+      //   for (let i = 0; i < tickerSymbols.length; i++) {
+      //     if (i === tickerSymbols.length - 1) {
+      //       newURl += tickerSymbols[i].ticker_symbol
+      //     } else {
+      //       newURl += tickerSymbols[i].ticker_symbol + ','
+      //     }
+      //   }
+    
+      //   logInfo('buildRequest() - newURL', this.logContext, newURl + `?apikey=${process.env.FM_API_KEY}`)
+      //   return newURl += `?apikey=${process.env.FM_API_KEY}`
+      // }
 
       private async buildResponse(marketData: any): Promise<any> {
         try {
