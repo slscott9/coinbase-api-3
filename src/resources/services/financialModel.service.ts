@@ -115,8 +115,8 @@ class FinancialModelService {
           for (let data of marketData) {
             formattedData.push(
               {
-                tickerSymbol: data.symbol,
-                price: data.price
+                tickerSymbol: data[0].symbol,
+                price: data[0].price
     
               }
             )
