@@ -75,13 +75,13 @@ class FinancialModelService {
         return currentPrices
       }
 
-      private async buildUrls(symbols: string[]): Promise<any> {
+      private async buildUrls(symbols: any[]): Promise<any> {
         let urls: string[] = []
         let newURl = 'https://financialmodelingprep.com/api/v3/quote-short/'
 
         for(let symbol of symbols){
           urls.push(
-            newURl + symbol + `?apikey=${process.env.FM_API_KEY}`
+            newURl + symbol.ticker_symbol + `?apikey=${process.env.FM_API_KEY}`
           )
         }
 
