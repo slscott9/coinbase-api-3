@@ -108,7 +108,7 @@ class FinancialModelService {
       // }
 
       private async buildResponse(marketData: any): Promise<any> {
-        logInfo('market data from api call', this.logContext, marketData)
+        logInfo('market data from api call', this.logContext, JSON.stringify(marketData))
         try {
           let formattedData: any[] = []
     
