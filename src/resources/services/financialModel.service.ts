@@ -80,9 +80,8 @@ class FinancialModelService {
         let newURl = 'https://financialmodelingprep.com/api/v3/quote-short/'
 
         for(let symbol of symbols){
-          logInfo('urls from buildUrls', this.logContext,  newURl += symbol += `?apikey=${process.env.FM_API_KEY}`)
           urls.push(
-            newURl += symbol += `?apikey=${process.env.FM_API_KEY}`
+            newURl + symbol + `?apikey=${process.env.FM_API_KEY}`
           )
         }
 
